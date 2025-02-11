@@ -5,6 +5,7 @@ let page;
 var Button = '';
 var text = '';
 const listaFutbol = [];
+const listaTenis = [];
 //funcion que nos permite interactuar con la pagina de Rb y abrir los componenetes necesarios
 const pageRushbet = async (url, deporte) => {
   var contador;
@@ -35,6 +36,13 @@ const pageRushbet = async (url, deporte) => {
     );
     function delay(ms) {
       return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+    const enVivo= await page.$('.kBYZVk');
+    if(enVivo){
+      const text = await enVivo.evaluate(el=> el.textContent.trim());
+      if(text && text.includes('En vivo')){
+        await enVivo.click();
+      }
     }
 
     for (let i = 0; i < sportsToClick.length; i++) {
@@ -78,6 +86,11 @@ const pageRushbet = async (url, deporte) => {
       listaFutbol.push(lista);
       await page.close();
       return listaFutbol.flat();
+    }
+    if(deporte === 'Tenis'){
+      listaTenis.push(lista);
+      await page.close();
+      return listaTenis.flat();
     }
     await page.close();
     //  return page;

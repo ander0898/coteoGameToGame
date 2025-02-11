@@ -109,9 +109,7 @@ const futbolDataBw = async (URL) => {
     console.log("iniciando Scraping bw");
     const participantes = await page.$$(".participant-name");
     const local = await participantes[0].evaluate((el) => el.textContent.trim());
-    const visitante = await participantes[1].evaluate((el) =>
-        el.textContent.trim()
-    );
+    const visitante = await participantes[1].evaluate((el) =>el.textContent.trim());
     // console.log(local, visitante);
     await opcionesClick(page);
     // return local;
@@ -122,8 +120,8 @@ const futbolDataBw = async (URL) => {
         sesionSelector,
         "Resultado del partido"
     ); // el index sirve para el descanso y la segunda parte
-    sesionActual = opcionPanel[index];
     if (index !== -1) {
+        sesionActual = opcionPanel[index];
         resultadoFinal = await extraerCuotasPartido(sesionActual, cuotaSelector);
         // console.log('resultado Final',resultadoFinal, index);
         // console.log('resultado Final');

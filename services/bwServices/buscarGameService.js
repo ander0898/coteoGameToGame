@@ -6,12 +6,13 @@ const jaroWinkler = require('jaro-winkler');
 const { buscarEquipo } = require("./metodosFutbolBw/buscarEquipo");
 const { buscarBw } = require("./metodosFutbolBw/buscarBw");
 const { normalizeText } = require("../../utils/aliasEquipos");
+const { tenisDataBw } = require("./tenisDataBwService");
 
 
 const listaError =[];
 var intento = 0; // NOTA   USAR LA VARIABLE GLOBAL ME INPIDE LLAMAR EL METODO EN SIMULTANIO 
 var page;
-const buscarGame = async (local, visitante) => {
+const buscarGame = async (local, visitante, deporte) => {
     const MAX_INTENTOS = 2;
     var res = false;
     try{
@@ -90,16 +91,23 @@ const buscarGame = async (local, visitante) => {
                 // res = await buscarEquipo(page, localActual, visitanteActual);
         //     }
         // }
-        page.close();
+        await page.close();
         if(res){
             // console.log('res', res);
             const URL = res;
-            res = await futbolDataBw(URL.toString()); // quitar el awit para que ejecute el scarping en Rb al mismo tiempo 
-        }else{
-            listaError.push({local: local, visitante: visitante});
-            console.log('add lista ERROR');
-        }
-        
+            switch(deporte){
+                case 'Futbol':
+                    res = await futbolDataBw(URL.toString()); // quitar el awit para que ejecute el scarping en Rb al mismo tiempo 
+                    break;
+                case 'Tenis':
+                    res = await tenisDataBw(URL);
+                    break;
+                }
+            }else{
+                listaError.push({local: local, visitante: visitante});
+                console.log('add lista ERROR');
+            }
+            
         console.log('termino la  busqueda en  Bw');
         intento = 0;
         return res!==false? res:false;
@@ -120,6 +128,9 @@ function cleanTeamName(name) {
         .replace(/^\d+\.?\s*|\d+$/g, '') // Elimina números al inicio o final (con o sin punto)
         .replace(/\s*\([^)]*\)\s*/g, '') // Elimina texto dentro de paréntesis
         .replace(/^\s*\b\w{1,3}\b\s*|\s*\b\w{1,2}\b\s*$/g, '') // Elimina palabras de 1 o 2 caracteres solo al inicio o final
+
+        .replace(/\b\w{1,2}\.\s*/g, "")// elimina 1 o 2 caracteres seguidos de un .
+        .replace(/,.*/g, "") // eliminar lo que hay de la coma en adelante 
         .trim(); // Elimina espacios extra
 }
 

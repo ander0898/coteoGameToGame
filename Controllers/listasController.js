@@ -1,4 +1,4 @@
-const { listaRh, listaBw } = require("../services/iniciarServices");
+const { listaRh, listaBw, listaTenisRh, listaTenisBw } = require("../services/iniciarServices");
 
 
 const listasGet = async() =>{
@@ -17,4 +17,11 @@ const listasGet = async() =>{
     return listaCombinada;
 }
 
-module.exports = {listasGet};
+const listasBwGet = async ()=>{
+    const listaCombinada = [];
+    for(let i = 0; i<= listaTenisRh.length; i++){
+        listaCombinada.push({bw: listaTenisBw[i], rh: listaTenisRh[i]});
+    }
+    return listaCombinada;
+}
+module.exports = {listasGet, listasBwGet};

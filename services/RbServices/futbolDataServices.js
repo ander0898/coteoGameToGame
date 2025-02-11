@@ -8,6 +8,7 @@ const { extraerAmbosMarcan } = require("./metodosFutbol/extraerAmbosMarcan");
 const { timeout } = require("puppeteer");
 const { extratorDataInicial } = require("./extractorDataInicialServices");
 const { Futbol } = require("../../Models/FutbolModel");
+const { prepararPageRb } = require("./prepararPageRb");
 const listaFutbol = [];
 const futbolData = async (link, local, visitante, liga) => {
         // varibales del modelo futbol
@@ -65,33 +66,34 @@ const futbolData = async (link, local, visitante, liga) => {
                 waitUntil: "networkidle0",
                 timeout: 40000
         }).catch(err => { console.error(err.message) });
-        function delay(ms) {
-                return new Promise((resolve) => setTimeout(resolve, ms));
-        }
-        console.log('iniciando scraping en Rh');
-        const plegables = await page.$$('.iunwi');
-        for (let i = 0; i < plegables.length; i++) {
-                try {
-                        await plegables[i].click();
-                        if(i === plegables.length-1){
-                                await delay(2000);
-                        }
-                } catch (err) {
-                        console.error('error al hacer click en el elemento #:' + i);
-                }
-                // await delay(2000);
-        }
-        // NOTA REVISAR LUEGO POR QUE NO ABRE TODOS LOS COMPONENTES 
-        const button = await page.$$('.KambiBC-outcomes-list__toggler-toggle-button.down');
-        // console.log(button.length);
-        for (let i = 0; i < button.length; i++) {
-                try {
-                        await button[i].click();
-                } catch (err) {
-                        console.error('error al hacer click en el botón #:' + i);
-                }
-                await delay(500);
-        }
+        // function delay(ms) {
+        //         return new Promise((resolve) => setTimeout(resolve, ms));
+        // }
+        // console.log('iniciando scraping en Rh');
+        // const plegables = await page.$$('.iunwi');
+        // for (let i = 0; i < plegables.length; i++) {
+        //         try {
+        //                 await plegables[i].click();
+        //                 if(i === plegables.length-1){
+        //                         await delay(2000);
+        //                 }
+        //         } catch (err) {
+        //                 console.error('error al hacer click en el elemento #:' + i);
+        //         }
+        //         // await delay(2000);
+        // }
+        // // NOTA REVISAR LUEGO POR QUE NO ABRE TODOS LOS COMPONENTES 
+        // const button = await page.$$('.KambiBC-outcomes-list__toggler-toggle-button.down');
+        // // console.log(button.length);
+        // for (let i = 0; i < button.length; i++) {
+        //         try {
+        //                 await button[i].click();
+        //         } catch (err) {
+        //                 console.error('error al hacer click en el botón #:' + i);
+        //         }
+        //         await delay(500);
+        // }
+        await prepararPageRb(page);
         
         // +++++++++++++++++++++++++++++++++++++ extraer cuotas  del resultado final ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ya bw
 

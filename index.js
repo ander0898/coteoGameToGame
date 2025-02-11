@@ -7,6 +7,7 @@ const cors = require('cors');
 const { iniciarServices } = require('./services/iniciarServices');
 // const futbolListas = require('./Routes/listaCombinadaRoutes.js');
 const futbolRouter = require('./Routes/routesRoutes.js');
+const tenisRoutes = require('./Routes/tenisRoutes.js');
 
 
 app.use(express.json());
@@ -18,6 +19,7 @@ app.use(cors({
   iniciarServices();
 
 app.use("/api/Futbol", futbolRouter);
+app.use('/api/Tenis',tenisRoutes);
 // app.use('/api',RoutesError);
 // app.use('/api/Futbol', futbolBw);
 // app.use('/api/Futbol',futbolListas);
