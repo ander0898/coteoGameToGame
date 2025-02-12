@@ -24,6 +24,8 @@ const tenisDataBw = async (URL)=>{
     var setsDelParido;
     var juegosTotalSetUno;
     var handicapSets;
+    var tieBreakSet1;
+    var ambosGananSet;
     
     const Browser = await browser();
     const page = await Browser.newPage(); //// volver a poner page como parametro al terminar
@@ -178,8 +180,8 @@ const tenisDataBw = async (URL)=>{
     ); // el index sirve para el descanso y la segunda parte
     if (index !== -1) {
         sesionActual = opcionPanel[index];
-        tieBreak = await extraerSinEmpateBw(sesionActual, cuotaSelector);
-        // console.log('tieBreak',tieBreak, index);
+        tieBreakSet1 = await extraerSinEmpateBw(sesionActual, cuotaSelector);
+        // console.log('tieBreak',tieBreakSet1, index);
         // console.log('resultado Final');
         index = -1;
     }
@@ -224,7 +226,7 @@ const tenisDataBw = async (URL)=>{
     }
 
     const result = new Tenis(local, visitante, ganadorPartido, ganadorSet1, ganadorSet2, ganadorHandicapJuegos, juegosTotal, localAlmenosUno
-    , visitanteAlmenosUno, partidoRemontada, tieBreak, setsDelParido, juegosTotalSetUno, handicapSets)
+    , visitanteAlmenosUno, partidoRemontada, tieBreak, setsDelParido, juegosTotalSetUno, handicapSets,tieBreakSet1, ambosGananSet)
     await page.close();
     return result;
     

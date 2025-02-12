@@ -1,6 +1,6 @@
 class Tenis {
     constructor(local, visitante, ganadorPartido, ganadorSet1, ganadorSet2, ganadorHandicapJuegos, juegosTotal, localAlmenosUno
-        , visitanteAlmenosUno, partidoRemontada, tieBreak, setsDelParido, juegosTotalSetUno, handicapSets
+        , visitanteAlmenosUno, partidoRemontada, tieBreak, setsDelParido, juegosTotalSetUno, handicapSets,tieBreakSet1,ambosGananSet
     ){
         this.local = local;
         this.visitante = visitante;
@@ -16,6 +16,8 @@ class Tenis {
         this.setsDelParido = setsDelParido;
         this.juegosTotalSetUno = juegosTotalSetUno;
         this.handicapSets = handicapSets;
+        this.tieBreakSet1 = tieBreakSet1;
+        this.ambosGananSet = ambosGananSet;
     }
 }
 

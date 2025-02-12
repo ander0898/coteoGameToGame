@@ -1,9 +1,9 @@
-const { query } = require("express");
+// const { query } = require("express");
 const { browser } = require("../browserServices/browserservice");
 const { futbolDataBw } = require("./futbolDataBwService");
-const levenshtein = require('fast-levenshtein');
-const jaroWinkler = require('jaro-winkler');
-const { buscarEquipo } = require("./metodosFutbolBw/buscarEquipo");
+// const levenshtein = require('fast-levenshtein');
+// const jaroWinkler = require('jaro-winkler');
+// const { buscarEquipo } = require("./metodosFutbolBw/buscarEquipo");
 const { buscarBw } = require("./metodosFutbolBw/buscarBw");
 const { normalizeText } = require("../../utils/aliasEquipos");
 const { tenisDataBw } = require("./tenisDataBwService");

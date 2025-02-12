@@ -1,17 +1,5 @@
 const { text } = require('express');
 const levenshtein = require('fast-levenshtein');
-// const aliasEquipos = {
-//     "manchester city": "man city",
-//     "manchester united": "man united",
-//     "newcastle united": "newcastle",
-//     '1. FC Kaiserslautern': 'Kaiserslautern',
-//     'Preußen Münster': 'SC Preussen 06 Munster',
-//     'La Equidad Seguros': 'Equidad',
-//     'Atletico Nacional S.': 'Atlético Nacional',
-//     'Club Deportivo Junior':'Junior FC',
-//     'Aguilas Doradas Rionegro +++':'Águilas Doradas',
-//     'Real Betis':'Real Betis'
-// };
 
 const buscarEquipo = async (barNav, local, visitante) => {
     console.log('local', local, 'visitante', visitante);
@@ -42,36 +30,21 @@ const buscarEquipo = async (barNav, local, visitante) => {
                     return matrix[b.length][a.length];
                 }
             };
-            // const normalizeText = (text) => {
-            //     text = text.toLowerCase().trim();
-            //     return alias[text] || text;
-            // };
-            // local = normalizeText(local);
-            // visitante= normalizeText(visitante);
             const lista = [];
             const contenedoresPartidos = el.querySelectorAll('.grid-event-wrapper');
             for (const partido of contenedoresPartidos) {
                 const equipos = partido.querySelectorAll('.participant-container');
                 let equipoLocal = equipos[0]?.textContent.toLowerCase().trim();
                 let equipoVisitante = equipos[1]?.textContent.toLowerCase().trim();
-                // equipoLocal= normalizeText(equipoLocal);
-                // equipoVisitante = normalizeText(equipoVisitante);
-                // lista.push({equipoLocal, equipoVisitante},{local,visitante});
-                // lista.push(levenshtein.get(equipoLocal, local));
-                // lista.push(levenshtein.get(equipoVisitante, visitante));
                 const esLocalSimilar = 
                     equipoLocal.includes(local) || local.includes(equipoLocal) || levenshtein.get(equipoLocal, local) < 5;
                 const esVisitanteSimilar =
                     equipoVisitante.includes(visitante) || visitante.includes(equipoLocal) || levenshtein.get(equipoVisitante, visitante) < 5;
-                // Verificar si coinciden local y visitante usando Levenshtein Distance
                 if (esLocalSimilar && esVisitanteSimilar) {
-                // lista.push({equipoLocal, equipoVisitante},{local,visitante}, 'si');
                     const enlace = partido.querySelector('a');
                     lista.push({'enlace': enlace});
                     if (enlace) {
                         const url = enlace.href;
-                        // enlace.click();
-                        // console.log('click');
                         return url;
                     }
                 }
@@ -81,7 +54,6 @@ const buscarEquipo = async (barNav, local, visitante) => {
         local,
         visitante,
     );
-    // console.log(partidoEncontrado)
 
     return partidoEncontrado;
 }

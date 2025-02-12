@@ -20,9 +20,11 @@ const tenisData = async (link, local, visitante, liga) => {
     var visitanteAlmenosUno;
     var partidoRemontada;
     var tieBreak;
+    var tieBreakSet1;
     var setsDelParido;
     var juegosTotalSetUno;
     var handicapSets;
+    var ambosGananSet;
     // variables de los selectores
     const cuotaSelector = "sc-kAyceB.gIMtGL";
     const sesionSelector = "KambiBC-bet-offer-subcategory__label";
@@ -127,7 +129,7 @@ const tenisData = async (link, local, visitante, liga) => {
         }
 
     const result = new Tenis(local, visitante, ganadorPartido, ganadorSet1, ganadorSet2, ganadorHandicapJuegos, juegosTotal, localAlmenosUno
-        , visitanteAlmenosUno, partidoRemontada, tieBreak, setsDelParido, juegosTotalSetUno, handicapSets)
+        , visitanteAlmenosUno, partidoRemontada, tieBreak, setsDelParido, juegosTotalSetUno, handicapSets, tieBreakSet1, ambosGananSet)
         await page.close()
         return result;
 };

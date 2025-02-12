@@ -1,6 +1,7 @@
 const { Deportes } = require("../utils/deportes");
 const { browser } = require("./browserServices/browserservice");
 const { buscarGame } = require("./bwServices/buscarGameService");
+const { buscarGameCod } = require("./codServices/buscarGameCodService");
 const { futbolData } = require("./RbServices/futbolDataServices");
 const { pageRushbet } = require("./RbServices/pageRusbetServices");
 const { tenisData } = require("./RbServices/tenisDataServices");
@@ -8,6 +9,7 @@ const listaRh = [];
 const listaBw = [];
 const listaTenisRh=[];
 const listaTenisBw=[];
+const listaTenisCod=[];
 
 const iniciarServices = async ( ) =>{
   //   console.log('services')
@@ -22,8 +24,9 @@ const iniciarServices = async ( ) =>{
     for(const element of  response){
       const local = element.partido?.local;
       const visitante = element.partido?.visitante;
+      const busquedaCod = await buscarGameCod(local, visitante, deporte );
       const busquedaBw = await buscarGame(local, visitante, deporte);
-      if(busquedaBw){
+      if(busquedaBw && busquedaCod){
         if(deporte === 'Futbol'){
           listaBw.push(busquedaBw)
           const busquedaRh = await futbolData(element.link, local, visitante, element.liga);
@@ -35,11 +38,13 @@ const iniciarServices = async ( ) =>{
         }
         if(deporte === 'Tenis'){
           listaTenisBw.push(busquedaBw);
+          listaTenisCod.push(busquedaCod);
           const busquedaRh = await tenisData(element.link, local, visitante, element.liga);
           if(busquedaRh){
             listaTenisRh.push(busquedaRh);
           }else{
             listaTenisBw.pop();
+            listaTenisCod.pop();
           }
         }
       }
@@ -49,6 +54,7 @@ const iniciarServices = async ( ) =>{
       // break; // denetner en la primer siclo 
     }
     // const busquedaBw = await buscarGame('Moutet, Corentin', 'Munar, Jaume', deporte );
+    // const busquedaBw = await buscarGameCod('Tien, Learner', 'Walton, Adam', deporte );
     // const busquedaRh = await futbolData(`https://www.rushbet.co/?page=sportsbook#event/1021042784`, 'Chelsea', 'West Ham', 'Premier League');
     // const busquedaRh = await tenisData(`https://www.rushbet.co/?page=sportsbook#event/1022790226`, 'Rublev, Andrey', 'Hurkacz, Hubert', 'Challenger / Bribane');
   });
@@ -69,4 +75,4 @@ const iniciarServices = async ( ) =>{
   // })
 }
 
-module.exports = {iniciarServices, listaRh, listaBw, listaTenisRh, listaTenisBw};
+module.exports = {iniciarServices, listaRh, listaBw, listaTenisRh, listaTenisBw, listaTenisCod};
