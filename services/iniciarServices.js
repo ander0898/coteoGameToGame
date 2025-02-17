@@ -25,7 +25,8 @@ const iniciarServices = async ( ) =>{
       const local = element.partido?.local;
       const visitante = element.partido?.visitante;
       const busquedaCod = await buscarGameCod(local, visitante, deporte );
-      const busquedaBw = await buscarGame(local, visitante, deporte);
+      var busquedaBw
+      busquedaCod ? busquedaBw = await buscarGame(local, visitante, deporte): null;
       if(busquedaBw && busquedaCod){
         if(deporte === 'Futbol'){
           listaBw.push(busquedaBw)

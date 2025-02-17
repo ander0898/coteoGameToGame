@@ -1,6 +1,7 @@
 const { browser } = require("../browserServices/browserservice")
 const levenshtein = require('fast-levenshtein');
 const { tenisDataCod } = require("./tenisDataCodService");
+const { listaError } = require("../bwServices/buscarGameService");
 
 var intento = 0;
 var page;
@@ -28,7 +29,7 @@ const buscarGameCod = async (local, visitante, deporte)=>{
         // if(inputBuscar){
             // await inputBuscar.click();
             // await inputBuscar.click();//  click con interfaz para quitar la ventana de cookies
-            await new Promise(resolve =>  setTimeout(resolve, 1000) );
+            await new Promise(resolve =>  setTimeout(resolve, 3000) );
             await page.type(selectorInput, local );
             await new Promise(resolve =>  setTimeout(resolve, 3000) );
             const campoResultados = await page.$('.search-accordion-group');
@@ -65,6 +66,10 @@ const buscarGameCod = async (local, visitante, deporte)=>{
         // }
         console.log('termino la  busqueda en  Cod');
         intento = 0;
+        if(!res){
+            listaError.push({local: local, visitante: visitante});
+            console.log('add lista ERROR');
+        }
         return res!==false? res:false;
     }catch(err){
         console.log(`Error en el intento ${intento + 1}: ${err.message}`);

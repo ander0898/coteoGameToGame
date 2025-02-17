@@ -35,13 +35,17 @@ const tenisData = async (link, local, visitante, liga) => {
     await page.setViewport({ width: 1920, height: 1080 });
     await page
         .goto(link, {
-            waitUntil: "networkidle0",
-            timeout: 40000,
+            // waitUntil: "networkidle0",
+            // timeout: 40000,
         })
         .catch((err) => {
             console.error(err.message);
         });
+        try{
+            await page.waitForSelector('.KambiBC-outcomes-list__toggler-toggle-button.down');
+        }catch{
 
+        }
     console.log("iniciando scraping en Rh");
     await prepararPageRb(page);
     //+++++++++++++++++++++++++++++++++++++++++++ extrar ganador del partido +++++++++++++++++++++++
