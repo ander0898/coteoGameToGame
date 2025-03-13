@@ -32,7 +32,7 @@ const tenisDataCod = async (page) =>{
     const local = await participantes[0].evaluate(el => el.textContent.trim());
     const visitante = await participantes[1].evaluate(el => el.textContent.trim());
     // console.log(local, visitante)
-    console.log('escraping en Cod')
+    // console.log('escraping en Cod')
     // +++++++++++++++++++++++++++++++++++++ extraer ganador Partido ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     var index = await buscarIndex(opcionesPanel,sesionSelector, 'Ganador del partido');
     // console.log(index);
@@ -92,7 +92,7 @@ const tenisDataCod = async (page) =>{
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     const opcionesNavbar = await clickNavBarCod(page,'sets')
-    console.log(opcionesNavbar)
+    // console.log(opcionesNavbar)
     await new Promise((resolve) => setTimeout(resolve, 1000));
     if(opcionesNavbar){
     // +++++++++++++++++++++++++++++++++++++ tieBreak set 1 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -116,8 +116,8 @@ const tenisDataCod = async (page) =>{
 
     const result = new Tenis(local, visitante, ganadorPartido, ganadorSet1, ganadorSet2, ganadorHandicapJuegos, juegosTotal, localAlmenosUno
         , visitanteAlmenosUno, partidoRemontada, tieBreak, setsDelParido, juegosTotalSetUno, handicapSets,tieBreakSet1,ambosGananSet)
-        await page.close();
-        console.log('termino escraping en Cod')
+        // await page.close();
+        // console.log('termino escraping en Cod')
         return result;
 
 

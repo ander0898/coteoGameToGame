@@ -7,7 +7,7 @@ const opcionesClick = async (page) => {
 
     const opciones = await page.$$(".option-panel"); // Obtiene los elementos con Puppeteer
     var menuBody = await page.$$('.option-panel-body');
-    console.log(menuBody.length+" "+ opciones.length);
+    // console.log(menuBody.length+" "+ opciones.length);
 
     for (let element of opciones) {
         try{

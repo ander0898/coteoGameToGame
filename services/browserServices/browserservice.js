@@ -7,7 +7,7 @@ async function browser(){
 
   try {
     if (!browserinstance) {
-      browserinstance = await puppeteer.launch({ headless: true });
+      browserinstance = await puppeteer.launch({ headless: false });
       return browserinstance;
     }
     return browserinstance;

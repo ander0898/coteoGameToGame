@@ -30,7 +30,7 @@ const tenisDataBw = async (URL)=>{
     const Browser = await browser();
     const page = await Browser.newPage(); //// volver a poner page como parametro al terminar
     await page.setViewport({ width: 1920, height: 1080 });
-    console.log("url: ", URL);
+    // console.log("url: ", URL);
     await page.goto(
         URL
         // // {waitUntil: "networkidle0",}
@@ -62,7 +62,7 @@ const tenisDataBw = async (URL)=>{
     await opcionesClick(page);
     // return 'si';
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log('inica scraping en bw tenis');
+    // console.log('inica scraping en bw tenis');
     const participantes = await page.$$(".participant-name");
     const local = await participantes[0].evaluate((el) => el.textContent.trim());
     const visitante = await participantes[1].evaluate((el) =>el.textContent.trim());
@@ -207,7 +207,7 @@ const tenisDataBw = async (URL)=>{
     if (index !== -1) {
         sesionActual = opcionPanel[index];
         setsDelParido = await extraerHandicapSetsBw(sesionActual);
-        console.log('sets Del Parido',setsDelParido, index);
+        // console.log('sets Del Parido',setsDelParido, index);
         // console.log('resultado Final');
         index = -1;
     }

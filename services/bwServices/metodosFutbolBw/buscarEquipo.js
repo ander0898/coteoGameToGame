@@ -2,7 +2,7 @@ const { text } = require('express');
 const levenshtein = require('fast-levenshtein');
 
 const buscarEquipo = async (barNav, local, visitante) => {
-    console.log('local', local, 'visitante', visitante);
+    // console.log('local', local, 'visitante', visitante);
     local = local.toLowerCase();
     visitante= visitante.toLowerCase();
     const partidoEncontrado = await barNav.evaluate(

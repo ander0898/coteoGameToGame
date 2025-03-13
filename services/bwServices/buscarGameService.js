@@ -10,15 +10,15 @@ const { tenisDataBw } = require("./tenisDataBwService");
 
 
 const listaError =[];
-var intento = 0; // NOTA   USAR LA VARIABLE GLOBAL ME INPIDE LLAMAR EL METODO EN SIMULTANIO 
-var page;
-const buscarGame = async (local, visitante, deporte) => {
+// var intento = 0; // NOTA   USAR LA VARIABLE GLOBAL ME INPIDE LLAMAR EL METODO EN SIMULTANIO 
+const buscarGame = async (local, visitante, deporte, intento) => {
+    var page;
     const MAX_INTENTOS = 2;
     var res = false;
     try{
 
         if (intento >= MAX_INTENTOS) {
-            console.log("Máximo de intentos alcanzado. Retornando false.");
+            // console.log("Máximo de intentos alcanzado. Retornando false.");
             intento = 0; // Reiniciar el contador
             return false;
         }
@@ -43,9 +43,9 @@ const buscarGame = async (local, visitante, deporte) => {
         visitante= await cleanTeamName(visitante);
         const localActual = await normalizeText(local);
         const visitanteActual = await normalizeText(visitante);
-        console.log('localActual', localActual, 'visitanteActual', visitanteActual);
+        // console.log('localActual', localActual, 'visitanteActual', visitanteActual);
         await page.waitForSelector(selectorInput,{ visible: true })
-        console.log('iniciando busqueda en  Bw');
+        // console.log('iniciando busqueda en  Bw');
         var localVisitante = await buscarBw(page,selectorInput, localActual+" "+visitanteActual, localActual, visitanteActual);
         if(localVisitante){
             res = localVisitante;
@@ -105,18 +105,18 @@ const buscarGame = async (local, visitante, deporte) => {
                 }
             }else{
                 listaError.push({local: local, visitante: visitante});
-                console.log('add lista ERROR');
+                // console.log('add lista ERROR');
             }
             
-        console.log('termino la  busqueda en  Bw');
+        // console.log('termino la  busqueda en  Bw');
         intento = 0;
         return res!==false? res:false;
     }catch(err){
-        console.log(`Error en el intento ${intento + 1}: ${err.message}`);
+        // console.log(`Error en el intento ${intento + 1}: ${err.message}`);
         intento++;
         await page.close();
-        console.log('Reintentando....');
-        return await buscarGame(local, visitante);
+        // console.log('Reintentando....');
+        return await buscarGame(local, visitante, deporte, intento);
     }
 }
 
